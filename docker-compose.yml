@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  flask:
+    build: .
+    container_name: serv
+    command: python app.py
+    ports:
+      -"8002:8002"
