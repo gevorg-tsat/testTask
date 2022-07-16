@@ -1,12 +1,15 @@
+# compose_flask/app.py
 from flask import Flask
+from redis import Redis
 
 app = Flask(__name__)
+redis = Redis(host='redis', port=6379)
 
-
-@app.route("/&lt;username&gt;", methods=['GET'])
-def index(username):
-    return "Hello, %s!" % username
+@app.route('/')
+def hello():
+    redis.incr('hits')
+    return 'This page has been viewed %s time(s).' % redis.get('hits')
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8002)
+    app.run(host="0.0.0.0", debug=True, port=8001)

@@ -1,9 +1,12 @@
-version: '3'
-
+version: '2'
 services:
-  flask:
-    build: .
-    container_name: serv
-    command: python app.py
-    ports:
-      -"8002:8002"
+    web:
+        build: .
+        ports:
+            - "8001:8001"
+        volumes:
+            - .:/code
+        depends_on:
+            - redis
+    redis:
+        image: redis
